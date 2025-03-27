@@ -9,9 +9,12 @@ data class RestoreOptions(
     val categories: Boolean = true,
     val appSettings: Boolean = true,
     val extensionRepoSettings: Boolean = true,
-    val customButtons: Boolean = true,
     val sourceSettings: Boolean = true,
+    // SY -->
+    val savedSearchesFeeds: Boolean = true,
+    // SY <--
     val extensions: Boolean = false,
+    val customButtons: Boolean = true,
 ) {
 
     fun asBooleanArray() = booleanArrayOf(
@@ -22,14 +25,20 @@ data class RestoreOptions(
         customButtons,
         sourceSettings,
         extensions,
+        // SY -->
+        savedSearchesFeeds,
+        // SY <--
     )
 
-    fun canRestore() = libraryEntries ||
+    fun canRestore() =
+     libraryEntries ||
         categories ||
         appSettings ||
-        extensionRepoSettings ||
+        extensionRepoSettings
+                sourceSettings ||
+ || /* SY --> */ ||
+            savedSearchesFeeds /* SY <-- */
         customButtons ||
-        sourceSettings ||
         extensions
 
     companion object {
@@ -55,19 +64,28 @@ data class RestoreOptions(
                 setter = { options, enabled -> options.copy(extensionRepoSettings = enabled) },
             ),
             Entry(
-                label = MR.strings.custom_button_settings,
-                getter = RestoreOptions::customButtons,
-                setter = { options, enabled -> options.copy(customButtons = enabled) },
-            ),
-            Entry(
                 label = MR.strings.source_settings,
                 getter = RestoreOptions::sourceSettings,
                 setter = { options, enabled -> options.copy(sourceSettings = enabled) },
             ),
+            // SY -->
+            Entry(
+                // KMK-->
+                label = KMR.strings.saved_searches_feeds,
+                // KMK <--
+                getter = RestoreOptions::savedSearchesFeeds,
+                setter = { options, enabled -> options.copy(savedSearchesFeeds = enabled) },
+            ),
+            // SY <--
             Entry(
                 label = MR.strings.label_extensions,
                 getter = RestoreOptions::extensions,
                 setter = { options, enabled -> options.copy(extensions = enabled) },
+            ),
+            Entry(
+                label = MR.strings.custom_button_settings,
+                getter = RestoreOptions::customButtons,
+                setter = { options, enabled -> options.copy(customButtons = enabled) },
             ),
         )
 
@@ -76,9 +94,12 @@ data class RestoreOptions(
             categories = array[1],
             appSettings = array[2],
             extensionRepoSettings = array[3],
-            customButtons = array[4],
-            sourceSettings = array[5],
+            sourceSettings = array[4],
+            // SY -->
+            savedSearchesFeeds = array[5],
+            // SY <--
             extensions = array[6],
+            customButtons = array[7],
         )
     }
 

@@ -3,6 +3,8 @@ package eu.kanade.tachiyomi.data.backup.create
 import dev.icerock.moko.resources.StringResource
 import kotlinx.collections.immutable.persistentListOf
 import tachiyomi.i18n.MR
+import tachiyomi.i18n.kmk.KMR
+import tachiyomi.i18n.sy.SYMR
 
 data class BackupOptions(
     val libraryEntries: Boolean = true,
@@ -13,10 +15,14 @@ data class BackupOptions(
     val readEntries: Boolean = true,
     val appSettings: Boolean = true,
     val extensionRepoSettings: Boolean = true,
-    val customButton: Boolean = true,
     val sourceSettings: Boolean = true,
     val privateSettings: Boolean = false,
+    // SY -->
+    val customInfo: Boolean = true,
+    val savedSearchesFeeds: Boolean = true,
+    // SY <--
     val extensions: Boolean = false,
+    val customButton: Boolean = true,
 ) {
 
     fun asBooleanArray() = booleanArrayOf(
@@ -28,18 +34,22 @@ data class BackupOptions(
         readEntries,
         appSettings,
         extensionRepoSettings,
-        customButton,
         sourceSettings,
         privateSettings,
+        // SY -->
+        customInfo,
+        savedSearchesFeeds,
+        // SY <--
         extensions,
+        customButton,
     )
 
     fun canCreate() = libraryEntries ||
         categories ||
         appSettings ||
         extensionRepoSettings ||
-        customButton ||
-        sourceSettings
+        sourceSettings || savedSearchesFeeds ||
+        customButton
 
     companion object {
         val libraryOptions = persistentListOf(
@@ -77,6 +87,21 @@ data class BackupOptions(
                 setter = { options, enabled -> options.copy(readEntries = enabled) },
                 enabled = { it.libraryEntries },
             ),
+            // SY -->
+            Entry(
+                label = SYMR.strings.custom_entry_info,
+                getter = BackupOptions::customInfo,
+                setter = { options, enabled -> options.copy(customInfo = enabled) },
+                enabled = { it.libraryEntries },
+            ),
+            Entry(
+                // KMK-->
+                label = KMR.strings.saved_searches_feeds,
+                // KMK <--
+                getter = BackupOptions::savedSearchesFeeds,
+                setter = { options, enabled -> options.copy(savedSearchesFeeds = enabled) },
+            ),
+            // SY <--
         )
 
         val settingsOptions = persistentListOf(
@@ -125,10 +150,14 @@ data class BackupOptions(
             readEntries = array[5],
             appSettings = array[6],
             extensionRepoSettings = array[7],
-            customButton = array[8],
-            sourceSettings = array[9],
-            privateSettings = array[10],
-            extensions = array[11],
+            sourceSettings = array[8],
+            privateSettings = array[9],
+            // SY -->
+            customInfo = array[10],
+            savedSearchesFeeds = array[11],
+            // SY <--
+            extensions = array[12],
+            customButton = array[13],
         )
     }
 
