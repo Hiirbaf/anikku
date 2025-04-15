@@ -176,7 +176,7 @@ enum class DiscordScreen(
     @StringRes val details: Int,
     val imageUrl: String,
 ) {
-    APP(R.string.app_name, R.string.browsing),
+    APP(R.string.app_name, R.string.browsing, ANIMETAIL_IMAGE),
     LIBRARY(R.string.label_library, R.string.browsing, LIBRARY_IMAGE_URL),
     UPDATES(R.string.label_recent_updates, R.string.scrolling, UPDATES_IMAGE_URL),
     HISTORY(R.string.label_recent_manga, R.string.scrolling, HISTORY_IMAGE_URL),
