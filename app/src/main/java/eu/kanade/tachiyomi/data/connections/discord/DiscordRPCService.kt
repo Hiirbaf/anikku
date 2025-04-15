@@ -295,7 +295,7 @@ class DiscordRPCService : Service() {
                 val discordIncognito = isIncognito(categories, playerData.incognitoMode)
 
                 val animeTitle = playerData.animeTitle.takeUnless { discordIncognito }
-                val episodeNumber = geFormattedEpisodeNumber(playerData, discordIncognito)
+                val episodeNumber = getFormattedEpisodeNumber(playerData, discordIncognito)
                 val (startTime, end) = getTimestamps(playerData)
 
                 withIOContext {
