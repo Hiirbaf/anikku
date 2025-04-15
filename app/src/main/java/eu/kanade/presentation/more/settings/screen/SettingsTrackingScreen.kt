@@ -209,7 +209,7 @@ object SettingsTrackingScreen : SearchableSettings {
                         },
                         logout = { dialog = LogoutDialog(trackerManager.bangumi) },
                     ),
-                    Preference.PreferenceItem.InfoPreference(stringResource(AMR.strings.tracking_info_anime)),
+                    Preference.PreferenceItem.InfoPreference(stringResource(MR.strings.tracking_info)),
                 ),
             ),
             Preference.PreferenceGroup(
